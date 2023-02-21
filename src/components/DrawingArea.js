@@ -1,7 +1,11 @@
 import React from 'react'
 import { Stage, Layer, Line } from 'react-konva'
 import { useEffect, useState, useRef } from 'react'
+import "./style.css"
 
+import Button from '@mui/material/Button';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 function downloadURI(uri, name) {
     var link = document.createElement('a');
@@ -13,6 +17,7 @@ function downloadURI(uri, name) {
 }
 
 
+
 export default function DrawingArea({ onClearLines, clearLines }) {
 
     const [tool, setTool] = useState('pen')
@@ -20,10 +25,11 @@ export default function DrawingArea({ onClearLines, clearLines }) {
     const isDrwaing = useRef(false)
     const stageRef = useRef(null);
 
+
     const handleExport = () => {
         const uri = stageRef.current.toDataURL();
         console.log(uri);
-        downloadURI(uri, 'stage.png');
+        downloadURI(uri, 'whiteborad.png');
     };
 
     useEffect(() => {
@@ -31,9 +37,10 @@ export default function DrawingArea({ onClearLines, clearLines }) {
     }, [clearLines])
 
     const handleMouseDown = (e) => {
+
         isDrwaing.current = true;
         const pos = e.target.getStage().getPointerPosition()
-        setLines([...lines, { tool,points: [pos.x, pos.y] }])
+        setLines([...lines, { tool, points: [pos.x, pos.y] }])
     }
 
     const handleMouseMove = (e) => {
@@ -60,46 +67,56 @@ export default function DrawingArea({ onClearLines, clearLines }) {
 
 
     return (
-        <div>
+        <div className="drawing-area">
             <div className="text-center text-dark">
-                <div id="buttons" className="save-button">
-                    <button onClick={handleExport}>Click to capture</button>
+                <div id="buttons" >
+                    <Button style={{ background: '#388087' }} variant="contained" onClick={handleExport}>Click to capture</Button>
                 </div>
-                <Stage
-                    width={600}
-                    height={600}
-                    ref={stageRef}
-                    onMouseDown={handleMouseDown}
-                    onMousemove={handleMouseMove}
-                    onMouseup={handleMouseUp}
-                    className="canvas-stage"
-                >
-                    <Layer>
-                        {lines.map((line, i) => (
-                            <Line
-                                key={i}
-                                points={line.points}
-                                stroke="#df4b26"
-                                strokeWidth={5}
-                                tension={0.5}
-                                lineCap="round"
-                                lineJoin="round"
-                                globalCompositeOperation={
-                                    line.tool === 'eraser' ? 'destination-out' : 'source-over'
-                                }
-                            />
-                        ))}
-                    </Layer>
-                </Stage>
-                <select
+                <div>
+                    <div className="flex-stage-1">
+
+                    </div>
+                    <div className="flex-stage-1">
+                        <Stage
+                            width={790}
+                            height={600}
+                            ref={stageRef}
+                            onMouseDown={handleMouseDown}
+                            onMousemove={handleMouseMove}
+                            onMouseup={handleMouseUp}
+                            className="canvas-stage"
+                        >
+
+                            <Layer>
+                              
+                                {lines.map((line, i) => (
+                                    <Line
+                                        key={i}
+                                        points={line.points}
+                                        stroke="#df4b26"
+                                        strokeWidth={5}
+                                        tension={0.5}
+                                        lineCap="round"
+                                        lineJoin="round"
+                                        globalCompositeOperation={
+                                            line.tool === 'eraser' ? 'destination-out' : 'source-over'
+                                        }
+                                    />
+                                ))}
+                            </Layer>
+                        </Stage>
+                    </div>
+                </div>
+                <Select
                     value={tool}
                     onChange={(e) => {
                         setTool(e.target.value);
                     }}
-                    >
-                        <option value="pen">Pen</option>
-                        <option value="eraser">Eraser</option>
-                    </select>
+                    
+                >
+                    <MenuItem value="pen">Pen</MenuItem>
+                    <MenuItem value="eraser">Eraser</MenuItem>
+                </Select>
             </div>
         </div>
     )

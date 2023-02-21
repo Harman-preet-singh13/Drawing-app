@@ -1,12 +1,6 @@
 .App{
   text-align: center;
+  background-color: #f6f6f2;
+  
 }
 
-
-.drawing-area{
-  width: 600px;
-  height: 650px;
-  background-color: lightgray;
-  border: 2px solid greenyellow;
-  margin: auto;
-}
