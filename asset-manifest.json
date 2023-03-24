@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/Drawing-app/static/css/main.3fd548b4.css",
+    "main.js": "/Drawing-app/static/js/main.82a409ca.js",
+    "static/media/whiteboard.jpg": "/Drawing-app/static/media/whiteboard.3d1f5d0cb5578827db3d.jpg",
+    "index.html": "/Drawing-app/index.html",
+    "main.3fd548b4.css.map": "/Drawing-app/static/css/main.3fd548b4.css.map",
+    "main.82a409ca.js.map": "/Drawing-app/static/js/main.82a409ca.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3fd548b4.css",
+    "static/js/main.82a409ca.js"
+  ]
+}
